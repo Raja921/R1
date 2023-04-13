@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<head>
+   
+    <title>calculator</title>
+</head>
+<body>
+    <div> 
+        <div>  <input type="button" onclick="clearAll()" value="AC"/>
+            
+               <span id="answer">0</span>    </div>
+        <div>
+                     
+                     
+        </div>
+          <div>
+              <input type="button" onclick="numericButton('7')" value="7"/>
+              <input type="button" onclick="numericButton('8')" value="8"/>
+              <input type="button"  onclick="numericButton('9')" value="9"/>
+              <input type="button" onclick="operatorButton('+')" value="+"/>
+        </div>
+          <div>
+              <input type="button"  onclick="numericButton('4')" value="4"/>
+              <input type="button" onclick="numericButton('5')" value="5"/>
+              <input type="button"  onclick="numericButton('6')" value="6"/>
+            <input   type="button" onclick="operatorButton('-')" value="-"/>
+        </div>
+          <div>
+              <input type="button"  onclick="numericButton('1')" value="1"/>
+              <input type="button"  onclick="numericButton('2')" value="2"/>
+              <input type="button"  onclick="numericButton('3')" value="3"/>
+              <input type="button" onclick="operatorButton('*')" value="*"/>
+        </div>
+          <div>
+             <input type="button"  onclick="numericButton('0')" value="0"/>
+             <input type="button" onclick="numericButton('.')" value="."/>
+             <input id="equals" type="button"  onclick="calculateQueue(array)" value="="/>
+             <input type="button" onclick="operatorButton('/')" value="/"/>
+			 <input type="button" value="del" onclick="deleteOne()">
+                  
+        
+        </div>
+        </div>  
+        <script>
+               var array = [];        
+            var input = 0;
+
+          
+          function calculateQueue(value){
+            if (input !==0) {
+            input = parseFloat(input);
+
+                addToArray(input);  //queue add
+                           
+            }
+          
+            var answer = value[0]; 
+           var dividedByZero = 0;
+
+        
+            for (  var i = 2; i < value.length; i= i+2) {
+
+                switch (array[i-1]) {
+                    case '+':
+                        answer+= value[i];    //value[0]+value[2]
+                        break;
+                    case '-':
+                        answer-= value[i];
+                        break;
+                    case '/':    if (value[i] === 0) {  
+                               dividedByZero = 1;}   //0
+                            else   { 
+                                  answer = answer / value[i];}
+
+                        break;
+                    case'*': answer = answer * value[i];
+                        break;
+                }
+
+            }
+
+            answer = answer.toFixed(10);
+            answer = parseFloat(answer);
+            if ( dividedByZero === 1) {    //0
+              clearAll();
+                document.getElementById("answer").innerHTML =  "ERROR";}
+            else
+            {document.getElementById("answer").innerHTML =  answer ;
+                input = answer;
+             
+              
+             array = []; }
+
+
+        }
+
+        function addToArray(input){
+            array.push(input);
+        }
+
+       
+        
+        
+        function clearAll() {
+            array = [];
+            input = 0;
+            document.getElementById("answer").innerHTML = "0";
+        }
+        function numericButton(arg){
+            if ( document.getElementById("answer").innerHTML ===  "ERROR" || 
+            (document.getElementById("answer").innerHTML == "0" && arg != "."))
+              { 
+                document.getElementById("answer").innerHTML = "";            // this is for dispalay
+             }
+
+            if (!(arg === ".") || !input.match(/[.]/)) {  //it check decimals 1 or bo decimals if decimals two
+
+            input += arg;
+            document.getElementById("answer").innerHTML += arg;}
+  
+
+        }  
+        function operatorButton(arg){
+              if (input !== 0 && input !== "-") {
+                  input = parseFloat(input);                  
+                  addToArray(input);
+                  addToArray(arg);
+                  document.getElementById("answer").innerHTML +=arg;
+                  input = 0;
+
+              }
+              if (arg == "-"  && isNaN(array[0]) && input !== "-")                        
+              {input ="-";
+
+                  document.getElementById("answer").innerHTML = "-";
+
+
+            }
+
+
+        }
+		 function deleteOne() {
+            if (document.getElementById("answer").innerHTML === "ERROR") {
+            return;
+             }
+               var currentAnswer = document.getElementById("answer").innerHTML;
+         if (currentAnswer.length === 1) {
+        input = 0;
+        document.getElementById("answer").innerHTML = "0";
+    }         
+	else {
+        var newAnswer = currentAnswer.slice(0, -1);
+        input = newAnswer;
+        document.getElementById("answer").innerHTML = newAnswer;
+    }
+            }
+ 
+       
+        </script>
+        
+</body>
+</html>
