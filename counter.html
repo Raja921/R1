@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<title>counter</title>
+	</head>
+	<body>
+	
+	<label id="num">3</label>
+	<br/>
+	<button onclick="addtion()">increment</button>
+	<button onclick="subtract()">decrement</button>
+	<button onclick="reset()">reset</button>
+	
+	<script>
+		
+		  let x = 3;
+     
+   function addtion() {
+
+    document.querySelector("#num").innerHTML=x=x+1;
+   }
+   
+   function subtract() {
+
+    document.querySelector("#num").innerHTML=x=x-1;
+   }
+   function reset() {
+
+    document.querySelector("#num").innerHTML=x=x=0;
+   }
+	</script>
+	
+	</body>
+
+</html>
